@@ -171,8 +171,8 @@ def simulate_impes(param_map: dict) -> dict:
         Sw_new = np.clip(Sw_new, Swr, 1.0 - Sorw)
 
         krwN, kroN = rel_perm(np.array([Sw_new[-1]]), Swr, Sorw, krw_star, kro_star, nw, no)
-        lam_wN = float(krwN / mu_w)
-        lam_oN = float(kroN / mu_o)
+        lam_wN = float(krwN[0] / mu_w)
+        lam_oN = float(kroN[0] / mu_o)
         lam_tN = lam_wN + lam_oN
         WI_new = 6.328e-4 * k_md * lam_tN * area / (dx / 2.0)
 
