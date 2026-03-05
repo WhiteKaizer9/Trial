@@ -317,7 +317,7 @@ with tab1:
 
 with tab2:
     st.subheader("Animated Inspector")
-    st.caption("Stable 2D animation: bottom blue = water, top black = oil, thin colored strip = pressure.")
+    st.caption("Press Top(white) Bottun to run 2D animation: bottom blue = water, top black = oil, thin colored strip = pressure.")
     H = D
     YMAX = H + 0.18 * H
     p_min = float(np.min(p_hist))
