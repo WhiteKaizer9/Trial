@@ -235,7 +235,7 @@ with col_left:
 
 with col_right:
     st.subheader("Display options")
-    show_dense_lines = st.checkbox("Show dense overlays for 1.1 and 1.2", value=False)
+    show_dense_lines = st.checkbox("Show dense overlays for 1.1 and 1.2", value=True)
     show_matrix = st.checkbox("Show A matrix and RHS in inspector", value=True)
 
 param_map = dict(zip(edited["Parameter"], edited["Value"]))
