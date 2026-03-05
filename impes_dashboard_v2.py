@@ -225,7 +225,7 @@ def compact_line_plot(x, y, xlabel, ylabel, height=2.2, marker=False):
     return fig
 
 st.title("IMPES Core Flood Dashboard")
-st.caption("Editable inputs, working IMPES engine, compact plots, and a stable animation.")
+
 
 col_left, col_right = st.columns([1.15, 0.85], gap="large")
 
