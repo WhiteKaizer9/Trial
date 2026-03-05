@@ -346,31 +346,69 @@ with tab2:
             shapes.append(dict(type="line", x0=xb, x1=xb, y0=0.0, y1=YMAX, line=dict(width=2, color="rgba(255,255,255,0.65)")))
         return shapes
 
+    
     fig_anim = go.Figure()
     fig_anim.add_trace(go.Scatter(x=[], y=[]))
     fig_anim.update_layout(
-        height=280,
-        margin=dict(l=10, r=10, t=10, b=10),
-        xaxis=dict(range=[0.0, x_centers[-1] + dx / 2.0], title="core length (in)"),
-        yaxis=dict(range=[0.0, YMAX], title="fill / pressure strip", showgrid=False, zeroline=False),
-        shapes=frame_shapes(0),
-        updatemenus=[dict(
-            type="buttons",
-            x=0.0,
-            y=1.18,
-            buttons=[
-                dict(label="Play", method="animate", args=[None, {"frame": {"duration": 220, "redraw": True}, "fromcurrent": True, "transition": {"duration": 0}}]),
-                dict(label="Pause", method="animate", args=[[None], {"frame": {"duration": 0, "redraw": True}, "mode": "immediate", "transition": {"duration": 0}}]),
-            ],
-        )],
-        sliders=[dict(
-            x=0.02,
-            y=-0.12,
-            len=0.96,
-            currentvalue={"prefix": "time step n = "},
-            steps=[dict(method="animate", args=[[str(n)], {"mode": "immediate", "frame": {"duration": 0, "redraw": True}, "transition": {"duration": 0}}], label=str(n)) for n in range(len(t))],
-        )],
-    )
+    height=280,
+    margin=dict(l=10, r=10, t=10, b=10),
+    xaxis=dict(range=[0.0, x_centers[-1] + dx / 2.0], title="core length (in)"),
+    yaxis=dict(range=[0.0, YMAX], title="fill / pressure strip", showgrid=False, zeroline=False),
+    shapes=frame_shapes(0),
+
+    # Global text color (helps slider labels/current value)
+    font=dict(color="black"),
+
+    updatemenus=[dict(
+        type="buttons",
+        x=0.0,
+        y=1.18,
+
+        # Button styling so text is always readable
+        bgcolor="rgba(30,30,30,0.85)",          # dark background
+        bordercolor="rgba(255,255,255,0.7)",
+        borderwidth=1,
+        font=dict(color="white"),               # white text
+
+        buttons=[
+            dict(
+                label="Play",
+                method="animate",
+                args=[None, {"frame": {"duration": 220, "redraw": True},
+                             "fromcurrent": True,
+                             "transition": {"duration": 0}}]
+            ),
+            dict(
+                label="Pause",
+                method="animate",
+                args=[[None], {"frame": {"duration": 0, "redraw": True},
+                               "mode": "immediate",
+                               "transition": {"duration": 0}}]
+            ),
+        ],
+    )],
+
+    sliders=[dict(
+        x=0.02,
+        y=-0.12,
+        len=0.96,
+
+        # Slider text styling
+        font=dict(color="black"),
+        currentvalue=dict(prefix="time step n = ", font=dict(color="black")),
+
+        steps=[
+            dict(
+                method="animate",
+                args=[[str(n)], {"mode": "immediate",
+                                 "frame": {"duration": 0, "redraw": True},
+                                 "transition": {"duration": 0}}],
+                label=str(n)
+            )
+            for n in range(len(t))
+        ],
+    )],
+)
     fig_anim.frames = [go.Frame(name=str(n), layout=dict(shapes=frame_shapes(n))) for n in range(len(t))]
     st.plotly_chart(fig_anim, use_container_width=True)
 
